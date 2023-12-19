@@ -1,8 +1,6 @@
-package org.example.producto2.models;
+package org.example.producto2.models.entity;
 
 import jakarta.persistence.*;
-
-import java.awt.*;
 
 @Entity
 @Table(name = "menu_tiene_producto")

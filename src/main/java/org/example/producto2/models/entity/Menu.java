@@ -1,21 +1,21 @@
-package org.example.producto2.models;
+package org.example.producto2.models.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tipo")
-public class Tipo {
+@Table(name = "menu")
+public class Menu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nombre", length = 50)
+    @Column(name = "nombre", length = 50, nullable = false)
     private String nombre;
 
-    @Column(name = "descripcion", length = 255)
-    private String descripcion;
+    @Column(name = "precio", nullable = false)
+    private Float precio;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class Tipo {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Float getPrecio() {
+        return precio;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setPrecio(Float precio) {
+        this.precio = precio;
     }
 }
