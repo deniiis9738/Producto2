@@ -2,6 +2,8 @@ package org.example.producto2.models;
 
 import jakarta.persistence.*;
 
+import java.awt.*;
+
 @Entity
 @Table(name = "menu_tiene_producto")
 public class MenuTieneProducto {
@@ -23,8 +25,6 @@ public class MenuTieneProducto {
         this.producto = producto;
         this.menu = menu;
     }
-
-    // Getters y Setters
 
     public Producto getProducto() {
         return producto;

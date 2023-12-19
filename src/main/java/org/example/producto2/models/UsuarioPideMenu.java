@@ -2,6 +2,8 @@ package org.example.producto2.models;
 
 import jakarta.persistence.*;
 
+import java.awt.*;
+
 @Entity
 @Table(name = "usuario_pide_menu")
 public class UsuarioPideMenu {
@@ -16,8 +18,6 @@ public class UsuarioPideMenu {
     @JoinColumn(name = "menu_id", nullable = false)
     private Menu menu;
 
-    // Constructores
-
     public UsuarioPideMenu() {
     }
 
@@ -25,8 +25,6 @@ public class UsuarioPideMenu {
         this.usuario = usuario;
         this.menu = menu;
     }
-
-    // Getters y Setters
 
     public Usuario getUsuario() {
         return usuario;
