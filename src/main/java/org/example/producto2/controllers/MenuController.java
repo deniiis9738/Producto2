@@ -22,7 +22,7 @@ public class MenuController {
 
     @GetMapping
     public List<Menu> getAllMenus() {
-        return menuService.getAllMenus();
+        return menuService.findAll();
     }
 
     @GetMapping("/{id}")
@@ -44,10 +44,5 @@ public class MenuController {
     @DeleteMapping("/{id}")
     public void deleteMenu(@PathVariable Long id) {
         menuService.deleteMenu(id);
-    }
-
-    @GetMapping("/{menuId}/productos")
-    public List<MenuTieneProducto> getMenuProductos(@PathVariable Long menuId) {
-        return menuService.getMenuProductos(menuId);
     }
 }

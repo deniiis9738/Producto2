@@ -1,65 +1,57 @@
 package org.example.producto2.models.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "usuario")
+@Table(name= "Usuario")
 public class Usuario {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nombre", length = 50)
+    @NotBlank
     private String nombre;
-
-    @Column(name = "apellidos", length = 100)
-    private String apellidos;
-
-    @Column(name = "email", length = 255, nullable = false)
+    @NotBlank
     private String email;
+    @NotBlank
+    private String username;
+    @NotBlank
+    private String password;
 
-    @Column(name = "telefono", length = 12, nullable = false)
-    private String telefono;
+    public Usuario(String nombre, String email, String username, String password) {
+        this.nombre = nombre;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
+
+    public Usuario() {
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "users_roles",
+            joinColumns = {
+                    @JoinColumn(name = "user_id", referencedColumnName =
+                            "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private Set<Role> rolesAssociated = new HashSet<>();
+
+    public Set<Role> getRolesAssociated() {
+        return rolesAssociated;
+    }
+
+    public void setRolesAssociated(Set<Role> rolesAssociated) {
+        this.rolesAssociated = rolesAssociated;
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 }
