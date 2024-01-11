@@ -1,6 +1,6 @@
-package org.example.producto2.services;
+package org.example.producto2.models.services.productoService;
 
-import org.example.producto2.models.dao.IProductosDAO;
+import org.example.producto2.models.repositories.ProductoRepository;
 import org.example.producto2.models.entity.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ProductoServiceImpl implements IProductosService {
+public class ProductoService implements IProductoService {
     @Autowired
-    private IProductosDAO iProductosDAO;
+    private ProductoRepository productoRepository;
 
     @Override
     @Transactional(readOnly = true)
     public List<Producto> findAll() {
-        return (List<Producto>) iProductosDAO.findAll();
+        return (List<Producto>) productoRepository.findAll();
     }
 }

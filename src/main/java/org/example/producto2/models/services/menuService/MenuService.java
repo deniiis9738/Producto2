@@ -1,7 +1,7 @@
 package org.example.producto2.models.services.menuService;
 
-import org.example.producto2.models.dao.MenuDAO;
-import org.example.producto2.models.dao.MenuTieneProductoDAO;
+import org.example.producto2.models.repositories.MenuRepository;
+import org.example.producto2.models.repositories.MenuTieneProductoRepository;
 import org.example.producto2.models.entity.Menu;
 import org.example.producto2.models.entity.MenuTieneProducto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,37 +13,37 @@ import java.util.Optional;
 @Service
 public class MenuService implements IMenuService {
 
-    private final MenuDAO menuDAO;
-    private final MenuTieneProductoDAO menuTieneProductoDAO;
+    private final MenuRepository menuRepository;
+    private final MenuTieneProductoRepository menuTieneProductoRepository;
 
     @Autowired
-    public MenuService(MenuDAO menuDAO, MenuTieneProductoDAO menuTieneProductoDAO) {
-        this.menuDAO = menuDAO;
-        this.menuTieneProductoDAO = menuTieneProductoDAO;
+    public MenuService(MenuRepository menuRepository, MenuTieneProductoRepository menuTieneProductoRepository) {
+        this.menuRepository = menuRepository;
+        this.menuTieneProductoRepository = menuTieneProductoRepository;
     }
 
     @Override
     public List<Menu> getAllMenus() {
-        return menuDAO.findAll();
+        return (List<Menu>) menuRepository.findAll();
     }
 
     @Override
     public Optional<Menu> getMenuById(Long id) {
-        return menuDAO.findById(id);
+        return menuRepository.findById(id);
     }
 
     @Override
     public Menu saveMenu(Menu menu) {
-        return menuDAO.save(menu);
+        return menuRepository.save(menu);
     }
 
     @Override
     public void deleteMenu(Long id) {
-        menuDAO.deleteById(id);
+        menuRepository.deleteById(id);
     }
 
     @Override
     public List<MenuTieneProducto> getMenuProductos(Long menuId) {
-        return menuTieneProductoDAO.findByMenuId(menuId);
+        return menuTieneProductoRepository.findByMenuId(menuId);
     }
 }
