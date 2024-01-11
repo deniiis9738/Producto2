@@ -1,9 +1,10 @@
 package org.example.producto2.models.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.example.producto2.models.entity.Menu;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.awt.*;
 
-public interface MenuRepository extends CrudRepository<Menu, Long> {
+
+public interface MenuRepository extends JpaRepository<Menu, Long> {
 
 }

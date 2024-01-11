@@ -16,6 +16,6 @@ public class ProductoService implements IProductoService {
     @Override
     @Transactional(readOnly = true)
     public List<Producto> findAll() {
-        return (List<Producto>) productoRepository.findAll();
+        return productoRepository.findAll();
     }
 }
