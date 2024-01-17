@@ -1,18 +1,20 @@
 package org.example.producto2.controllers;
 
+import org.example.producto2.models.services.menuService.MenuService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/")
 public class HomeController {
+    @Autowired
+    private MenuService menuService;
 
-    @GetMapping({"/home", "/index"})
-    public String home(@RequestParam(name = "nombre", required = true, defaultValue = "Denis") String nombre, Model model) {
-        model.addAttribute("nombre", nombre);
-        return "home";
+    @GetMapping("/")
+    public String home(Model model){
+        model.addAttribute("menus", menuService.findAll());
+        model.addAttribute("currentPage", "home");
+        return "base_layout";
     }
 }

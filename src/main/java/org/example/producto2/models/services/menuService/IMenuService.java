@@ -6,12 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IMenuService {
-
     List<Menu> findAll();
-
-    Optional<Menu> getMenuById(Long id);
-
-    Menu saveMenu(Menu menu);
-
-    void deleteMenu(Long id);
+    Optional<Menu> findById(Long id);
+    Menu create(Menu menu);
+    Menu update(Menu menu);
+    void delete(Long id);
 }

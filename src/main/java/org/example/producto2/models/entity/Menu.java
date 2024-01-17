@@ -2,20 +2,29 @@ package org.example.producto2.models.entity;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "menu")
-public class Menu {
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = "Menu")
+public class Menu {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nombre", length = 50, nullable = false)
-    private String nombre;
+    private String name;
+    private double price;
 
-    @Column(name = "precio", nullable = false)
-    private Float precio;
+    @ManyToMany(mappedBy = "menusAssociated", fetch = FetchType.LAZY)
+    private Set<Producto> productsAssociated = new LinkedHashSet<>();
+
+    public Menu(String name, double price) {
+        this.setName(name);
+        this.setPrice(price);
+    }
+
+    public Menu() {
+    }
 
     public Long getId() {
         return id;
@@ -25,19 +34,27 @@ public class Menu {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Float getPrecio() {
-        return precio;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPrecio(Float precio) {
-        this.precio = precio;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Set<Producto> getProductsAssociated() {
+        return productsAssociated;
+    }
+
+    public void setProductsAssociated(Set<Producto> productsAssociated) {
+        this.productsAssociated = productsAssociated;
     }
 }

@@ -1,48 +1,59 @@
 package org.example.producto2.controllers;
 
 import org.example.producto2.models.entity.Menu;
-import org.example.producto2.models.entity.MenuTieneProducto;
 import org.example.producto2.models.services.menuService.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/menus")
+@Controller
 public class MenuController {
-
-    private final MenuService menuService;
-
     @Autowired
-    public MenuController(MenuService menuService) {
-        this.menuService = menuService;
+    private MenuService menuService;
+
+    @GetMapping("/menus")
+    public String getMenus(Model model){
+        model.addAttribute("menus", menuService.findAll());
+        model.addAttribute("currentPage", "menus");
+        return "menus";
     }
 
-    @GetMapping
-    public List<Menu> getAllMenus() {
-        return menuService.findAll();
+    @GetMapping("/menu/{id}")
+    public String getMenuDetail(Model model, @PathVariable Long id) throws Exception {
+        Optional<Menu> menu = Optional.ofNullable(menuService.findById(id).orElseThrow(() -> new Exception("Menu" + id + " not found")));
+        if(menu.isPresent()) {
+            model.addAttribute("menu", menu.get());
+            model.addAttribute("currentPage", "menus");
+        }
+        return "edit_menu";
     }
 
-    @GetMapping("/{id}")
-    public Optional<Menu> getMenuById(@PathVariable Long id) {
-        return menuService.getMenuById(id);
+    @PostMapping("/menu/update/{id}")
+    public String updateMenu(@PathVariable("id") Long id,
+                             @ModelAttribute("menu") Menu menuDetails) throws Exception {
+        Optional<Menu> menu = Optional.ofNullable(menuService.findById(id).orElseThrow(() -> new Exception("Menu" + id + " not found")));
+        if(menu.isPresent()){
+            menu.get().setName(menuDetails.getName());
+            menu.get().setPrice(menuDetails.getPrice());
+            menuService.update(menu.get());
+        }
+        return "redirect:/menu/" + id;
     }
 
-    @PostMapping
-    public Menu saveMenu(@RequestBody Menu menu) {
-        return menuService.saveMenu(menu);
+    @GetMapping("/menu/create")
+    public String createMenu(Model model) {
+        model.addAttribute("menu", new Menu());
+        model.addAttribute("currentPage", "menus");
+        return "create_menu";
     }
 
-    @PutMapping("/{id}")
-    public Menu updateMenu(@PathVariable Long id, @RequestBody Menu menu) {
-        menu.setId(id);
-        return menuService.saveMenu(menu);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteMenu(@PathVariable Long id) {
-        menuService.deleteMenu(id);
+    @PostMapping("/menu/save")
+    public String newMenu(Model model, @ModelAttribute("menu") Menu menu) {
+        menuService.create(menu);
+        return "redirect:/";
     }
 }
