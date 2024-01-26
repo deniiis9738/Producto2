@@ -3,6 +3,7 @@ package org.example.producto2.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -35,24 +36,28 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(configurer ->
-                configurer
-                        .requestMatchers("/productos").permitAll()
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("images/**").permitAll()
-                        .requestMatchers(("css/**")).permitAll()
-                        .requestMatchers(("js/**")).permitAll()
-                        .requestMatchers("/menus/new").hasRole("MANAGER")
-                        .requestMatchers("/systems/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-        )
+        httpSecurity
+                .authorizeHttpRequests(configurer ->
+                    configurer
+                            .requestMatchers("/productos").permitAll()
+                            .requestMatchers("/").permitAll()
+                            .requestMatchers("images/**").permitAll()
+                            .requestMatchers(("css/**")).permitAll()
+                            .requestMatchers(("js/**")).permitAll()
+                            .requestMatchers("/menus/new").hasRole("MANAGER")
+                            .requestMatchers("/systems/**").hasRole("ADMIN")
+                            .anyRequest().authenticated()
+                )
+
                 .formLogin(form ->
                         form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/authenticateTheUser")
                                 .defaultSuccessUrl("/", true)
                                 .permitAll()
-                );
+                )
+
+                .logout(LogoutConfigurer::permitAll);
         return httpSecurity.build();
     }
 }

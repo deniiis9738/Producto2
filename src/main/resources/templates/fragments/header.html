@@ -35,6 +35,11 @@
                             <span class="nav-link__badge">0</span>
                         </a>
                     </li>
+                    <li class="nav-item nav-item--logout">
+                        <form class="nav-link" th:classappend="${currentPage == 'logout'} ? 'active'" aria-current="page" action="#" th:action="@{/logout}" method="POST">
+                            <button type="submit" class="btn btn-link text-decoration-none">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>

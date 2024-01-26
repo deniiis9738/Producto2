@@ -9,7 +9,7 @@ public class MenuTieneProducto {
     @Id
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
-    private Producto producto;
+    private Product product;
 
     @Id
     @ManyToOne
@@ -19,17 +19,17 @@ public class MenuTieneProducto {
     public MenuTieneProducto() {
     }
 
-    public MenuTieneProducto(Producto producto, Menu menu) {
-        this.producto = producto;
+    public MenuTieneProducto(Product product, Menu menu) {
+        this.product = product;
         this.menu = menu;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Product getProducto() {
+        return product;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setProducto(Product product) {
+        this.product = product;
     }
 
     public Menu getMenu() {

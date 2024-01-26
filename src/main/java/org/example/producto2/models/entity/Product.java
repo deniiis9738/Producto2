@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table (name = "Product")
-public class Producto {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
@@ -26,12 +26,12 @@ public class Producto {
                             nullable = false, updatable = false)})
     private Set<Menu> menusAssociated = new HashSet<>();
 
-    public Producto(String name, double price) {
+    public Product(String name, double price) {
         this.setName(name);
         this.setPrice(price);
     }
 
-    public Producto() {
+    public Product() {
     }
 
     public Long getId() {

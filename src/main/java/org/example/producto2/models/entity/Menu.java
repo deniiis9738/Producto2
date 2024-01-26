@@ -16,7 +16,7 @@ public class Menu {
     private double price;
 
     @ManyToMany(mappedBy = "menusAssociated", fetch = FetchType.LAZY)
-    private Set<Producto> productsAssociated = new LinkedHashSet<>();
+    private Set<Product> productsAssociated = new LinkedHashSet<>();
 
     public Menu(String name, double price) {
         this.setName(name);
@@ -50,11 +50,11 @@ public class Menu {
         this.price = price;
     }
 
-    public Set<Producto> getProductsAssociated() {
+    public Set<Product> getProductsAssociated() {
         return productsAssociated;
     }
 
-    public void setProductsAssociated(Set<Producto> productsAssociated) {
+    public void setProductsAssociated(Set<Product> productsAssociated) {
         this.productsAssociated = productsAssociated;
     }
 }
